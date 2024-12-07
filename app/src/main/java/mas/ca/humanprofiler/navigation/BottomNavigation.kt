@@ -1,6 +1,9 @@
 package mas.ca.humanprofiler.navigation
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Edit
@@ -13,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -21,6 +26,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import mas.ca.humanprofiler.R
 import mas.ca.humanprofiler.ui.ThemedText
 import mas.ca.humanprofiler.ui.ThemedTextOptions
+import mas.ca.humanprofiler.ui.theme.DefaultIconSize
 
 enum class Routes(val id: String) {
     INPUT("input"),
@@ -45,11 +51,29 @@ fun BottomNavigationBar(navController: NavHostController) {
     ) {
         BottomNavigationItem.entries.forEach { item ->
             val selected = currentRoute == item.route
+            val iconScale = animateFloatAsState(if (selected) 1.3f else 1f, animationSpec = tween(200), label = "Selected route icon scale")
             NavigationBarItem(
-                icon = { Icon(item.icon, contentDescription = stringResource(item.labelResId)) },
+                icon = {
+                    Icon(
+                        modifier = Modifier
+                            .size(DefaultIconSize)
+                            .graphicsLayer {
+                                scaleY = iconScale.value
+                                scaleX = iconScale.value
+                                transformOrigin = TransformOrigin.Center
+                            },
+                        imageVector = item.icon,
+                        contentDescription = stringResource(item.labelResId)
+                    )
+                },
                 label = {
                     ThemedText(
-                        modifier = Modifier,
+                        modifier = Modifier
+                            .graphicsLayer {
+                                scaleY = iconScale.value
+                                scaleX = iconScale.value
+                                transformOrigin = TransformOrigin.Center
+                            },
                         text = stringResource(item.labelResId),
                         options = ThemedTextOptions(
                             type = ThemedText.Type.BODY_MEDIUM,
