@@ -125,7 +125,7 @@ private fun InputScreen(
                 text = error,
                 options = ThemedTextOptions(
                     textAlignment = TextAlign.Center,
-                    textColor = MaterialTheme.colorScheme.error
+                    style = ThemedText.Style.ERROR
                 )
             )
         }

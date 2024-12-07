@@ -18,6 +18,11 @@ object ThemedText {
         BODY_MEDIUM,
         BODY_SMALL
     }
+
+    enum class Style {
+        NORMAL,
+        ERROR
+    }
 }
 
 @Composable
@@ -39,7 +44,10 @@ fun ThemedText(
         }.let { style ->
             options.fontWeight?.let { fontWeight -> style.copy(fontWeight = fontWeight) } ?: style
         }.let { style ->
-            options.textColor?.let { color -> style.copy(color = color) } ?: style
+            when (options.style) {
+                ThemedText.Style.NORMAL -> style
+                ThemedText.Style.ERROR -> style.copy(color = MaterialTheme.colorScheme.error)
+            }
         },
         overflow = options.overflow ?: TextOverflow.Visible,
         maxLines = options.maxLines ?: Int.MAX_VALUE
@@ -65,7 +73,10 @@ fun ThemedText(
         }.let { style ->
             options.fontWeight?.let { fontWeight -> style.copy(fontWeight = fontWeight) } ?: style
         }.let { style ->
-            options.textColor?.let { color -> style.copy(color = color) } ?: style
+            when (options.style) {
+                ThemedText.Style.NORMAL -> style
+                ThemedText.Style.ERROR -> style.copy(color = MaterialTheme.colorScheme.error)
+            }
         },
         overflow = options.overflow ?: TextOverflow.Visible,
         maxLines = options.maxLines ?: Int.MAX_VALUE
@@ -76,6 +87,7 @@ data class ThemedTextOptions(
     val textAlignment: TextAlign? = null,
     val fontWeight: FontWeight? = null,
     val type: ThemedText.Type = ThemedText.Type.BODY_LARGE,
+    val style: ThemedText.Style = ThemedText.Style.NORMAL,
     val overflow: TextOverflow? = null,
     val maxLines: Int? = null,
     val textColor: Color? = null

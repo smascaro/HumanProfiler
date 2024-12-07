@@ -33,7 +33,7 @@ class HistoryViewModel(
                 }
 
                 is Result.Failure -> {
-                    // TODO()
+                    _uiState.update { it.copy(showError = true) }
                 }
             }
         }

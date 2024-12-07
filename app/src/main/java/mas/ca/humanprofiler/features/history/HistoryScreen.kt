@@ -3,12 +3,14 @@ package mas.ca.humanprofiler.features.history
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -54,7 +56,8 @@ data class HistoryScreenState(
     val profiles: List<Profile> = emptyList(),
     val sortedBy: Sorting = Sorting.DEFAULT,
     val showLoadingIndicator: Boolean = false,
-    val showSortingChooser: Boolean = false
+    val showSortingChooser: Boolean = false,
+    val showError: Boolean = false
 )
 
 
@@ -82,17 +85,32 @@ private fun HistoryScreen(
     onCurrentSortingClick: () -> Unit,
     onSortingSelectorDismissed: () -> Unit
 ) {
-    if (state.showSortingChooser) {
-        ProfilesSortingSelectorSheet(
+    when {
+        state.showSortingChooser -> ProfilesSortingSelectorSheet(
             modifier = Modifier,
             selectedSorting = state.sortedBy,
             onSortingSelected = onNewSortingClick,
             onSheetDismissed = onSortingSelectorDismissed
         )
+
+        state.showError -> ErrorLoadingText(modifier = modifier)
+
+        else -> HistoryScreenDataContent(
+            modifier = modifier,
+            state = state,
+            onCurrentSortingClick = onCurrentSortingClick
+        )
     }
+}
+
+@Composable
+private fun HistoryScreenDataContent(
+    modifier: Modifier,
+    state: HistoryScreenState,
+    onCurrentSortingClick: () -> Unit
+) {
     LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         item {
             SortingRow(
@@ -114,6 +132,21 @@ private fun HistoryScreen(
                 profile = profile
             )
         }
+    }
+}
+
+@Composable
+private fun ErrorLoadingText(
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier) {
+        ThemedText(
+            modifier = Modifier.align(Alignment.Center),
+            text = stringResource(R.string.something_went_wrong_please_try_again),
+            options = ThemedTextOptions(
+                style = ThemedText.Style.ERROR
+            )
+        )
     }
 }
 
@@ -221,8 +254,19 @@ private fun SortingRow(
 private fun ProfileItemPreview() {
     HumanProfilerTheme {
         ProfileItem(
-            modifier = Modifier,
+            modifier = Modifier.width(300.dp),
             profile = Profile(Name("Sergi"), Age(29), Date(System.currentTimeMillis().minus(3588000)))
+        )
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+private fun ErrorMessagePreview() {
+    HumanProfilerTheme {
+        ErrorLoadingText(
+            modifier = Modifier,
         )
     }
 }
@@ -232,7 +276,9 @@ private fun ProfileItemPreview() {
 private fun HistoryScreenPreview() {
     HumanProfilerTheme {
         HistoryScreen(
-            modifier = Modifier.padding(top = 48.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 48.dp),
             state = HistoryScreenState(
                 profiles = listOf(
                     Profile(Name("Sergi"), Age(29), Date()),
@@ -250,7 +296,8 @@ private fun HistoryScreenPreview() {
                     Profile(Name("Marie"), Age(90), Date()),
                 ),
                 sortedBy = Sorting(Sorting.Type.NAME, Sorting.Direction.ASCENDING),
-                showLoadingIndicator = false
+                showLoadingIndicator = false,
+                showError = true
             ),
             onNewSortingClick = {},
             onCurrentSortingClick = {},
