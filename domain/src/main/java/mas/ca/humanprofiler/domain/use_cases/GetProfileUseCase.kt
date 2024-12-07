@@ -5,6 +5,9 @@ import mas.ca.humanprofiler.domain.entities.Profile
 import mas.ca.humanprofiler.domain.entities.Result
 import mas.ca.humanprofiler.domain.repository.ProfilesRepositoryInterface
 
+/**
+ * Use case for retrieving a profile given their name.
+ */
 class GetProfileUseCase(
     private val profilesRepository: ProfilesRepositoryInterface
 ) : UseCase<GetProfileUseCase.Request, Result<Profile, GetProfileUseCase.ErrorType>> {
@@ -15,7 +18,7 @@ class GetProfileUseCase(
 
     data class Request(val name: Name) : UseCase.Request
 
-    enum class ErrorType{
+    enum class ErrorType {
         NO_INTERNET,
         INVALID_NAME,
         UNKNOWN

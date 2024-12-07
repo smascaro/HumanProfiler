@@ -5,6 +5,9 @@ import mas.ca.humanprofiler.domain.entities.Result
 import mas.ca.humanprofiler.domain.entities.Sorting
 import mas.ca.humanprofiler.domain.repository.ProfilesRepositoryInterface
 
+/**
+ * Use case for retrieving all previously requested profiles sorted by the given [Sorting].
+ */
 class GetAllProfilesUseCase(
     private val profilesRepository: ProfilesRepositoryInterface
 ) : UseCase<GetAllProfilesUseCase.Request, Result<List<Profile>, Unit>> {
