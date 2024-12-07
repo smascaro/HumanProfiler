@@ -24,6 +24,7 @@ object NameSanitizer {
             println("Character: $character, Allowed: $it")
         }
     }
+
     private val allowedSpecialCharacters = arrayOf('-', '\'')
     private val multiSpaceRegex = "\\s+".toRegex()
 }

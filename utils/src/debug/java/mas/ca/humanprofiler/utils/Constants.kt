@@ -1,5 +1,5 @@
 package mas.ca.humanprofiler.utils
 
-object Constants{
+object Constants {
     const val DEBUG = true
 }

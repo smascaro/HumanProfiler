@@ -1,15 +1,15 @@
 package mas.ca.humanprofiler.data.di
 
 import android.app.Application
-import mas.ca.humanprofiler.data.repositories.ProfilesRepository
 import mas.ca.humanprofiler.data.datasources.local.LocalStorageDatabase
 import mas.ca.humanprofiler.data.network.ApiClient
+import mas.ca.humanprofiler.data.repositories.ProfilesRepository
 import mas.ca.humanprofiler.domain.di.DataLayerInjectionInterface
 import mas.ca.humanprofiler.domain.repository.ProfilesRepositoryInterface
 
 class DataLayerInjection(application: Application) : DataLayerInjectionInterface {
 
-    private val apiClient = ApiClient.getInstance(application)
+    private val apiClient = ApiClient.getInstance()
 
     init {
         LocalStorageDatabase.create(application)

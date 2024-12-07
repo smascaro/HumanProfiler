@@ -38,9 +38,7 @@ private val DarkColorScheme = darkColorScheme(
     outlineVariant = NeutralGrey60,
     scrim = MiscOrangeTint,
     surfaceBright = PrimaryPostOrange,
-    surfaceContainer = DarkThemeSurfaceContainer,
-
-
+    surfaceContainer = DarkThemeSurfaceContainer
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -75,7 +73,6 @@ private val LightColorScheme = lightColorScheme(
     scrim = MiscScrim,
     surfaceBright = PrimaryPostOrange,
     surfaceContainer = BasicWhite
-
 )
 
 @Composable

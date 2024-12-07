@@ -1,9 +1,8 @@
 package mas.ca.humanprofiler.data.network
 
-import android.content.Context
 import mas.ca.humanprofiler.data.datasources.remote.AgifyService
 
-class ApiClient(private val applicationContext:Context) : ApiClientInterface {
+class ApiClient : ApiClientInterface {
 
     private val retrofit = RetrofitClient.create()
 
@@ -15,10 +14,11 @@ class ApiClient(private val applicationContext:Context) : ApiClientInterface {
 
         @Volatile
         private var INSTANCE: ApiClient? = null
+
         @Synchronized
-        fun getInstance(applicationContext: Context): ApiClient {
+        fun getInstance(): ApiClient {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: ApiClient(applicationContext).also { INSTANCE = it }
+                INSTANCE ?: ApiClient().also { INSTANCE = it }
             }
         }
     }

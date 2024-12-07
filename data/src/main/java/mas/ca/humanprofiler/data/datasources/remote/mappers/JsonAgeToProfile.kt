@@ -6,7 +6,7 @@ import mas.ca.humanprofiler.domain.entities.Name
 import mas.ca.humanprofiler.domain.entities.Profile
 import mas.ca.humanprofiler.domain.utils.Mapper
 
-object JsonAgeToProfile :Mapper<JsonAge, Profile> {
+object JsonAgeToProfile : Mapper<JsonAge, Profile> {
     override fun map(input: JsonAge): Profile {
         return Profile(
             name = Name(input.name),
