@@ -49,22 +49,8 @@ dependencies {
     implementation(libs.room)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
-//    testImplementation Testing.junit.jupiter.api
-    testImplementation(libs.junit.jupiter)
-//    testRuntimeOnly Testing.junit.jupiter.engine
-    /*testRuntimeOnly(libs.junit.jupiter.engine)*/
-//    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:_"
-    testRuntimeOnly(libs.junit.vintage.engine)
-//    testImplementation Testing.mockito.core
-    testImplementation(libs.mockito)
 
-    testImplementation(libs.androidx.test.core)
     testImplementation(libs.androidx.junit)
-
-//    androidTestUtil(libs.androidx.test.orchestrator)
-
-//    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.mockito)
+    testImplementation(libs.androidx.test.core)
 }

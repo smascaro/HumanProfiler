@@ -1,20 +1,19 @@
-package mas.ca.humanprofiler.data
+package mas.ca.humanprofiler.data.repositories
 
 import kotlinx.coroutines.runBlocking
 import mas.ca.humanprofiler.data.datasources.local.ProfileDao
 import mas.ca.humanprofiler.data.datasources.local.entities.LocalProfile
 import mas.ca.humanprofiler.data.datasources.remote.AgifyService
 import mas.ca.humanprofiler.data.datasources.remote.entities.JsonAge
-import mas.ca.humanprofiler.data.repositories.ProfilesRepository
 import mas.ca.humanprofiler.domain.entities.Name
 import mas.ca.humanprofiler.domain.entities.Result
 import mas.ca.humanprofiler.domain.use_cases.GetProfileUseCase
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.mockito.Mock
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.doThrow
@@ -63,7 +62,7 @@ class ProfilesRepositoryTest {
         val result = profilesRepository.getProfileForName(Name(testName))
 
         verify(mockedAgifyService, times(1)).getAge(testName)
-        assertInstanceOf(Result.Success::class.java, result)
+        assertTrue(result is Result.Success)
         assertEquals((result as Result.Success).result.name.value, testName)
     }
 
@@ -74,7 +73,7 @@ class ProfilesRepositoryTest {
         val result = profilesRepository.getProfileForName(Name(testName))
 
         verify(mockedAgifyService, times(0)).getAge(testName)
-        assertInstanceOf(Result.Success::class.java, result)
+        assertTrue(result is Result.Success)
         assertEquals((result as Result.Success).result.name.value, testName)
     }
 
@@ -90,7 +89,7 @@ class ProfilesRepositoryTest {
 
         verify(mockedProfileDao, times(1)).delete(expiredLocalProfile)
         verify(mockedAgifyService, times(1)).getAge(testName)
-        assertInstanceOf(Result.Success::class.java, result)
+        assertTrue(result is Result.Success)
         assertEquals((result as Result.Success).result.name.value, testName)
     }
 
@@ -104,7 +103,7 @@ class ProfilesRepositoryTest {
         val result = profilesRepository.getProfileForName(Name(testName))
 
         verify(mockedAgifyService, times(1)).getAge(testName)
-        assertInstanceOf(Result.Failure::class.java, result)
+        assertTrue(result is Result.Failure)
         assertEquals(GetProfileUseCase.ErrorType.INVALID_NAME, (result as Result.Failure).error)
     }
 
