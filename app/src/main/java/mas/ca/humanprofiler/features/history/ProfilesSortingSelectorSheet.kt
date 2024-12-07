@@ -95,7 +95,7 @@ private fun SortingOption(
                 modifier = Modifier
                     .size(DefaultIconSize)
                     .graphicsLayer(rotationZ = rotationAnimation),
-                contentDescription = "Sorting order"
+                contentDescription = stringResource(R.string.sorting_order)
             )
         }
     }

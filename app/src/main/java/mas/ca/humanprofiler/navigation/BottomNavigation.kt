@@ -1,5 +1,6 @@
 package mas.ca.humanprofiler.navigation
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Edit
@@ -13,15 +14,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import mas.ca.humanprofiler.R
 import mas.ca.humanprofiler.ui.ThemedText
 import mas.ca.humanprofiler.ui.ThemedTextOptions
 
-sealed class BottomNavigationItem(val route: String, val icon: ImageVector, val label: String) {
-    data object Input : BottomNavigationItem("input", Icons.Filled.Edit, "Input")
-    data object History : BottomNavigationItem("history", Icons.AutoMirrored.Filled.List, "History")
+enum class Routes(val id: String) {
+    INPUT("input"),
+    HISTORY("history")
+}
+
+sealed class BottomNavigationItem(val route: String, val icon: ImageVector, @StringRes val labelResId: Int) {
+    data object Input : BottomNavigationItem(Routes.INPUT.id, Icons.Filled.Edit, R.string.input_route_label)
+    data object History : BottomNavigationItem(Routes.HISTORY.id, Icons.AutoMirrored.Filled.List, R.string.history_route_label)
 
     companion object {
         val entries = listOf(Input, History)
@@ -38,11 +46,11 @@ fun BottomNavigationBar(navController: NavHostController) {
         BottomNavigationItem.entries.forEach { item ->
             val selected = currentRoute == item.route
             NavigationBarItem(
-                icon = { Icon(item.icon, contentDescription = item.label) },
+                icon = { Icon(item.icon, contentDescription = stringResource(item.labelResId)) },
                 label = {
                     ThemedText(
                         modifier = Modifier,
-                        text = item.label,
+                        text = stringResource(item.labelResId),
                         options = ThemedTextOptions(
                             type = ThemedText.Type.BODY_MEDIUM,
                             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal

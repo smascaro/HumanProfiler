@@ -234,7 +234,7 @@ private fun SortingRow(
             modifier = Modifier,
             annotatedText = buildAnnotatedString {
                 withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("Sorting by: ")
+                    append(stringResource(R.string.sorting_by))
                 }
                 append(stringResource(id = sorting.type.textResourceId))
             }
@@ -244,7 +244,7 @@ private fun SortingRow(
                 .size(DefaultIconSize)
                 .rotate(-90f),
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-            contentDescription = "Sorting selection",
+            contentDescription = stringResource(R.string.sorting_selection),
         )
     }
 }

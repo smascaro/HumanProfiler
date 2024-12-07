@@ -18,4 +18,9 @@
     <string name="invalid_name">Please enter a valid name.</string>
     <string name="something_went_wrong_please_try_again">Something went wrong, please try again.</string>
     <string name="age_colon">"Age: "</string>
+    <string name="sorting_by">"Sorting by: "</string>
+    <string name="sorting_selection">Sorting selection</string>
+    <string name="sorting_order">Sorting order</string>
+    <string name="input_route_label">Input</string>
+    <string name="history_route_label">History</string>
 </resources>
