@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_huger">32dp</dimen>
+    <dimen name="padding_huge">24dp</dimen>
+    <dimen name="padding_larger">16dp</dimen>
+    <dimen name="padding_large">10dp</dimen>
+    <dimen name="padding_default">6dp</dimen>
+    <dimen name="padding_small">3dp</dimen>
+    <dimen name="padding_tiny">2dp</dimen>
+    <dimen name="padding_smallest">1dp</dimen>
+    <dimen name="margin_tiny">2dp</dimen>
+    <dimen name="margin_small">3dp</dimen>
+    <dimen name="margin_default">6dp</dimen>
+    <dimen name="margin_large">10dp</dimen>
+    <dimen name="margin_larger">16dp</dimen>
+    <dimen name="margin_huge">20dp</dimen>
+    <dimen name="margin_huger">32dp</dimen>
+    <dimen name="margin_gigantic">60dp</dimen>
+    <dimen name="name_input_width">240dp</dimen>
+    <dimen name="item_height">48.dp</dimen>
+    <dimen name="default_icon_size">24dp</dimen>
+</resources>
