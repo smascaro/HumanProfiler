@@ -85,14 +85,16 @@ private fun HistoryScreen(
     onCurrentSortingClick: () -> Unit,
     onSortingSelectorDismissed: () -> Unit
 ) {
-    when {
-        state.showSortingChooser -> ProfilesSortingSelectorSheet(
+    if (state.showSortingChooser) {
+        ProfilesSortingSelectorSheet(
             modifier = Modifier,
             selectedSorting = state.sortedBy,
             onSortingSelected = onNewSortingClick,
             onSheetDismissed = onSortingSelectorDismissed
         )
 
+    }
+    when {
         state.showError -> ErrorLoadingText(modifier = modifier)
 
         else -> HistoryScreenDataContent(
