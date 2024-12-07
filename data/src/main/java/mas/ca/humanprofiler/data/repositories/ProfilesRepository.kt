@@ -5,6 +5,7 @@ import mas.ca.humanprofiler.data.datasources.local.mappers.LocalProfileToProfile
 import mas.ca.humanprofiler.data.datasources.local.mappers.ProfileToLocalProfile
 import mas.ca.humanprofiler.data.datasources.remote.AgifyService
 import mas.ca.humanprofiler.data.datasources.remote.mappers.JsonAgeToProfile
+import mas.ca.humanprofiler.data.utils.NameSanitizer
 import mas.ca.humanprofiler.domain.entities.Name
 import mas.ca.humanprofiler.domain.entities.Profile
 import mas.ca.humanprofiler.domain.entities.Result
@@ -25,7 +26,8 @@ class ProfilesRepository(
 
     override suspend fun getProfileForName(name: Name): Result<Profile, GetProfileUseCase.ErrorType> {
         return try {
-            val cachedProfile = getCachedProfile(name)
+            val sanitizedName = NameSanitizer.sanitize(name)
+            val cachedProfile = getCachedProfile(sanitizedName)
             if (cachedProfile != null) {
                 val updatedCachedProfile = cachedProfile.copy(lastAccessed = Date(System.currentTimeMillis()))
                 profileDao.update(ProfileToLocalProfile.map(updatedCachedProfile))
@@ -33,7 +35,7 @@ class ProfilesRepository(
             } else {
                 val profile =
                     agifyService
-                        .getAge(name.value)
+                        .getAge(sanitizedName.value)
                         .let { JsonAgeToProfile.map(it) }
                         .copy(lastAccessed = Date(System.currentTimeMillis()))
 
@@ -51,6 +53,8 @@ class ProfilesRepository(
                 404, 422 -> failure(GetProfileUseCase.ErrorType.INVALID_NAME)
                 else -> failure(GetProfileUseCase.ErrorType.UNKNOWN)
             }
+        } catch (illegalArgumentException: IllegalArgumentException) {
+            failure(GetProfileUseCase.ErrorType.INVALID_NAME)
         } catch (exception: Exception) {
             Timber.e("Failure while fetching a profile age", exception)
             failure(GetProfileUseCase.ErrorType.UNKNOWN)
