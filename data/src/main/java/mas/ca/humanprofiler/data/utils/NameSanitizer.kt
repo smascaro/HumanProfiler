@@ -26,5 +26,5 @@ object NameSanitizer {
     }
 
     private val allowedSpecialCharacters = arrayOf('-', '\'')
-    private val multiSpaceRegex = "\\s+".toRegex()
+    private val multiSpaceRegex = "\\s+".toRegex() // regular expression to catch multiple space characters together
 }

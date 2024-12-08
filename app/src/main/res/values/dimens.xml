@@ -19,4 +19,5 @@
     <dimen name="name_input_width">240dp</dimen>
     <dimen name="item_height">48.dp</dimen>
     <dimen name="default_icon_size">24dp</dimen>
+    <dimen name="small_corner_size">4dp</dimen>
 </resources>

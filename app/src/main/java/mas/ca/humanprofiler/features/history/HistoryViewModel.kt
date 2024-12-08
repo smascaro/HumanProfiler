@@ -28,13 +28,8 @@ class HistoryViewModel(
             val result = getAllProfilesUseCase.execute(GetAllProfilesUseCase.Request(_uiState.value.sortedBy))
             _uiState.update { it.copy(showLoadingIndicator = false) }
             when (result) {
-                is Result.Success -> {
-                    _uiState.update { it.copy(profiles = result.result) }
-                }
-
-                is Result.Failure -> {
-                    _uiState.update { it.copy(showError = true) }
-                }
+                is Result.Success -> _uiState.update { it.copy(profiles = result.result) }
+                is Result.Failure -> _uiState.update { it.copy(showError = true) }
             }
         }
     }

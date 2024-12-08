@@ -45,6 +45,7 @@ import mas.ca.humanprofiler.ui.theme.DevicePreviews
 import mas.ca.humanprofiler.ui.theme.HumanProfilerTheme
 import mas.ca.humanprofiler.ui.theme.NameInputWidth
 import mas.ca.humanprofiler.ui.theme.PaddingLarge
+import mas.ca.humanprofiler.ui.theme.SmallCornerSize
 
 data class InputScreenState(
     val name: Name? = null,
@@ -156,7 +157,7 @@ private fun SubmitButton(
     Button(
         modifier = modifier.fillMaxWidth(),
         enabled = !state.showLoadingIndicator && userInput.isNotBlank(),
-        shape = RoundedCornerShape(4.dp),
+        shape = RoundedCornerShape(SmallCornerSize),
         onClick = { onNameSubmit(Name(userInput)) },
 
         ) {
