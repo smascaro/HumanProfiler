@@ -11,7 +11,6 @@ object ProfileToLocalProfile : Mapper<Profile, LocalProfile> {
             name = input.name.value,
             age = input.age.value,
             lastAccessMillis = input.lastAccessed.time,
-//            cachedAtMillis = input.lastAccessed.time
         )
     }
 }
