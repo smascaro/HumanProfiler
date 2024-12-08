@@ -20,8 +20,6 @@ object NameSanitizer {
             character.isWhitespace() -> true
             character in allowedSpecialCharacters -> true
             else -> false
-        }.also {
-            println("Character: $character, Allowed: $it")
         }
     }
 
