@@ -298,8 +298,7 @@ private fun HistoryScreenPreview() {
                     Profile(Name("Marie"), Age(90), Date()),
                 ),
                 sortedBy = Sorting(Sorting.Type.NAME, Sorting.Direction.ASCENDING),
-                showLoadingIndicator = false,
-                showError = true
+                showLoadingIndicator = false
             ),
             onNewSortingClick = {},
             onCurrentSortingClick = {},
