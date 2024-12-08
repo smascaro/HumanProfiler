@@ -1,5 +1,6 @@
 package mas.ca.humanprofiler.features.history
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -105,6 +108,7 @@ private fun HistoryScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HistoryScreenDataContent(
     modifier: Modifier,
@@ -114,15 +118,20 @@ private fun HistoryScreenDataContent(
     LazyColumn(
         modifier = modifier.fillMaxSize()
     ) {
-        item {
-            SortingRow(
+        stickyHeader {
+            Card(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.surfaceContainer)
                     .fillMaxWidth()
                     .padding(PaddingLarge),
-                sorting = state.sortedBy,
-                onClick = { onCurrentSortingClick() }
-            )
+                elevation = CardDefaults.outlinedCardElevation()
+            ) {
+                SortingRow(
+                    modifier = Modifier.padding(PaddingLarge),
+                    sorting = state.sortedBy,
+                    onClick = { onCurrentSortingClick() }
+                )
+            }
         }
         items(state.profiles.size) { index ->
             val profile = state.profiles[index]
