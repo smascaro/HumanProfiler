@@ -115,34 +115,56 @@ private fun HistoryScreenDataContent(
     state: HistoryScreenState,
     onCurrentSortingClick: () -> Unit
 ) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize()
-    ) {
-        stickyHeader {
-            Card(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surfaceContainer)
-                    .fillMaxWidth()
-                    .padding(PaddingLarge),
-                elevation = CardDefaults.outlinedCardElevation()
-            ) {
-                SortingRow(
-                    modifier = Modifier.padding(PaddingLarge),
-                    sorting = state.sortedBy,
-                    onClick = { onCurrentSortingClick() }
+    if (state.profiles.isEmpty()) {
+        EmptyListText(modifier = modifier)
+    } else {
+        LazyColumn(
+            modifier = modifier.fillMaxSize()
+        ) {
+            stickyHeader {
+                Card(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.surfaceContainer)
+                        .fillMaxWidth()
+                        .padding(PaddingLarge),
+                    elevation = CardDefaults.outlinedCardElevation()
+                ) {
+                    SortingRow(
+                        modifier = Modifier.padding(PaddingLarge),
+                        sorting = state.sortedBy,
+                        onClick = { onCurrentSortingClick() }
+                    )
+                }
+            }
+            items(state.profiles.size) { index ->
+                val profile = state.profiles[index]
+                ProfileItem(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(if (index % 2 == 0) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onSurfaceVariant)
+                        .padding(PaddingLarge),
+                    profile = profile
                 )
             }
         }
-        items(state.profiles.size) { index ->
-            val profile = state.profiles[index]
-            ProfileItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(if (index % 2 == 0) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onSurfaceVariant)
-                    .padding(PaddingLarge),
-                profile = profile
+    }
+}
+
+@Composable
+private fun EmptyListText(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .padding(PaddingLarge)
+    ) {
+        ThemedText(
+            modifier = Modifier.align(Alignment.Center),
+            text = stringResource(R.string.search_for_names_in_the_input_screen_to_see_them_here),
+            options = ThemedTextOptions(
+                textAlignment = TextAlign.Center,
             )
-        }
+        )
     }
 }
 
