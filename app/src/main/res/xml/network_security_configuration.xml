@@ -10,8 +10,9 @@
     <domain-config>
         <domain includeSubdomains="true">agify.io</domain>
         <pin-set>
-            <pin digest="SHA-256">ciIJGp411SQbR0JPsil5wvxh/zGjvB7FoSoRMyO70G8=</pin>
-            <pin digest="SHA-256">K7rZOrXHknnsEhUH8nLL4MZkejquUuIvOIr6tCa0rbo=</pin>
+            <pin digest="SHA-256">u24CfXfNXBbEwI9AF8qYWK5omegkZDhZIjc0Ba2FQao=</pin>
+            <pin digest="SHA-256">bdrBhpj38ffhxpubzkINl0rG+UyossdhcBYj+Zx2fcc=</pin>
+            <pin digest="SHA-256">C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=</pin>
         </pin-set>
     </domain-config>
 </network-security-config>
