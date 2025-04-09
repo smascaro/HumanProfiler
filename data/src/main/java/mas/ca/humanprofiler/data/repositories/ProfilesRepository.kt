@@ -45,10 +45,11 @@ class ProfilesRepository(
                 success(profile)
             }
         } catch (unknownHostException: UnknownHostException) {
-            Timber.e("Failure while fetching a profile age, no internet connection")
+            logError(unknownHostException,"Failure while fetching a profile age, no internet connection")
             failure(GetProfileUseCase.ErrorType.NO_INTERNET)
         } catch (httpException: HttpException) {
-            Timber.e("Failure while fetching a profile age, http exception:", httpException)
+            logError(httpException, "Failure while fetching a profile age")
+
             when (httpException.code()) {
                 404, 422 -> failure(GetProfileUseCase.ErrorType.INVALID_NAME)
                 else -> failure(GetProfileUseCase.ErrorType.UNKNOWN)
@@ -56,9 +57,14 @@ class ProfilesRepository(
         } catch (illegalArgumentException: IllegalArgumentException) {
             failure(GetProfileUseCase.ErrorType.INVALID_NAME)
         } catch (exception: Exception) {
-            Timber.e("Failure while fetching a profile age", exception)
+            logError(exception, "Failure while fetching a profile age")
             failure(GetProfileUseCase.ErrorType.UNKNOWN)
         }
+    }
+
+    private fun logError(exception: Exception, message:String){
+        Timber.e(message)
+        Timber.e(exception)
     }
 
     private suspend fun getCachedProfile(name: Name): Profile? {
